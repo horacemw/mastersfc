@@ -28,6 +28,28 @@ export const news: NewsArticle[] = [
     ],
   },
   {
+    id: 'n08',
+    slug: 'sambani-ndau-goal-of-the-month',
+    title: 'Sambani, Ndau win inaugural goal of the month awards',
+    excerpt:
+      'Masters FC skipper Precious Sambani and forward Hastings Ndau have made history after winning the inaugural MAGLA FDH Bank Premiership Goal of the Month awards.',
+    category: 'Awards',
+    date: '2026-10-15',
+    author: 'Masters FC Media',
+    content: [
+      'Masters FC skipper Precious Sambani and forward Hastings Ndau have made history after winning the inaugural MAGLA FDH Bank Premiership Goal of the Month awards.',
+      'Sambani was named the May Goal of the Month winner for his outstanding strike against Chitipa United, before Ndau followed in June with his spectacular goal against Goshen City Dedza Dynamos.',
+      'The double recognition means Masters FC has claimed two of the first three Goal of the Month awards introduced by the Super League of Malawi (SULOM) in partnership with the Malawi Gaming and Lotteries Authority (MAGLA).',
+      'Both players will receive K1 million and a miniature as part of the recognition, which celebrates outstanding goals scored in the FDH Bank Premiership.',
+      'For Sambani, the May award adds another memorable moment to his season after his goal against Chitipa United caught the attention of football fans and the league organisers.',
+      'Ndau then continued Masters FC’s dominance in the monthly accolade with his June winner against Dedza Dynamos, underlining the quality and attacking threat within the Masters squad.',
+      'The awards are part of a newly introduced initiative by SULOM and MAGLA aimed at recognising outstanding individual performances while using football as a platform to promote responsible gambling awareness.',
+      'As a club, we congratulate Precious Sambani and Hastings Ndau on this well-deserved recognition and thank them for continuing to raise the Masters FC name on the national stage.',
+      'Congratulations, Captain Sambani and Hastings! 💚🧡',
+      '#MWOSMalawi #MastersFootballClub #MastersSecurityServices #MastersFinanceLTD #MastersAgriWorld #MastersBakery #MastersBoreholeDrilling',
+    ],
+  },
+  {
     id: 'n01',
     slug: 'masters-fc-continue-preparations',
     title: 'Masters FC Continue Preparations for Upcoming Match',

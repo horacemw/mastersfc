@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LinkButton } from '../components/Button';
 import { ImagePlaceholder } from '../components/ImagePlaceholder';
 import { PageHero } from '../components/PageHero';
@@ -16,6 +16,28 @@ const milestones = [
 ];
 
 export function AboutPage() {
+  const timelineRef = useRef<HTMLOListElement | null>(null);
+  const [timelineVisible, setTimelineVisible] = useState(false);
+
+  useEffect(() => {
+    const node = timelineRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setTimelineVisible(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     document.title = 'About | Masters FC';
   }, []);
@@ -132,9 +154,18 @@ export function AboutPage() {
             title={<>Key <span className="text-pitch-700">Moments</span></>}
             description="A short history of a club built step by step."
           />
-          <ol className="mt-10 relative border-l-2 border-pitch-700/20 ml-3 md:ml-0 md:border-l-0 md:grid md:grid-cols-4 md:gap-6">
+          <ol
+            ref={timelineRef}
+            className="mt-10 relative border-l-2 border-pitch-700/20 ml-3 md:ml-0 md:border-l-0 md:grid md:grid-cols-4 md:gap-6"
+          >
             {milestones.map((m, i) => (
-              <li key={m.year} className="relative pl-6 md:pl-0 pb-10 md:pb-0 md:text-center">
+              <li
+                key={m.year}
+                className={`relative pl-6 md:pl-0 pb-10 md:pb-0 md:text-center ${
+                  timelineVisible ? 'animate-fade-up opacity-100' : 'opacity-0'
+                }`}
+                style={timelineVisible ? { animationDelay: `${i * 140}ms` } : undefined}
+              >
                 <span className="absolute -left-[9px] md:static md:mx-auto md:mb-4 top-1 flex items-center justify-center w-4 h-4 md:w-6 md:h-6 rounded-full bg-pitch-700 ring-4 ring-lime-brand/40">
                   <span className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-lime-brand" />
                 </span>

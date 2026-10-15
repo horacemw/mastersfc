@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { LinkButton } from '../components/Button';
 import { ImagePlaceholder } from '../components/ImagePlaceholder';
@@ -11,10 +11,31 @@ const formatDate = (iso: string) =>
 export function MatchDetailsPage() {
   const { id } = useParams();
   const match = id ? getMatchById(id) : undefined;
+  const momentsRef = useRef<HTMLUListElement | null>(null);
+  const [momentsVisible, setMomentsVisible] = useState(false);
 
   useEffect(() => {
     document.title = match ? `${match.opponent} | Match | Masters FC` : 'Match | Masters FC';
   }, [match]);
+
+  useEffect(() => {
+    const node = momentsRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setMomentsVisible(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [match?.id]);
 
   if (!match) {
     return (
@@ -92,11 +113,14 @@ export function MatchDetailsPage() {
             {match.highlights && match.highlights.length > 0 && (
               <>
                 <h3 className="mt-10 font-display font-bold text-xl text-pitch-950">Key Moments</h3>
-                <ul className="mt-4 space-y-3">
+                <ul ref={momentsRef} className="mt-4 space-y-3">
                   {match.highlights.map((h, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-4 rounded-2xl bg-pitch-50 border border-pitch-900/10 p-4"
+                      className={`flex items-start gap-4 rounded-2xl bg-pitch-50 border border-pitch-900/10 p-4 ${
+                        momentsVisible ? 'animate-fade-up opacity-100' : 'opacity-0'
+                      }`}
+                      style={momentsVisible ? { animationDelay: `${i * 120}ms` } : undefined}
                     >
                       <div className="w-12 h-12 shrink-0 rounded-full bg-pitch-700 text-lime-brand flex items-center justify-center font-display font-bold">
                         {h.minute}'

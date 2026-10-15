@@ -8,7 +8,7 @@ import { ArrowRight, CartIcon, Close, Minus, Plus } from '../components/Icons';
 
 interface CartItem { product: Product; size: string; qty: number }
 
-const categories: ('All' | Product['category'])[] = ['All', 'Jerseys', 'Training', 'Lifestyle', 'Accessories'];
+const categories: ('All' | Product['category'])[] = ['All', 'Jerseys'];
 
 const formatMWK = (amount: number) => `MWK ${amount.toLocaleString('en-MW')}`;
 

@@ -130,8 +130,6 @@ export function ContactPage() {
 
             <ImagePlaceholder
               type="map"
-              title="Club Location Map"
-              helper="Replace with embedded map"
               aspectRatio="4/3"
             />
           </aside>

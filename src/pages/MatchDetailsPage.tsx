@@ -120,8 +120,6 @@ export function MatchDetailsPage() {
             </div>
             <ImagePlaceholder
               type="hero"
-              title="Match Photo"
-              helper="Replace with matchday / stadium photograph"
               aspectRatio="4/3"
             />
           </aside>

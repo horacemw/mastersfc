@@ -66,8 +66,6 @@ export function AboutPage() {
             <div className="absolute -inset-5 bg-pitch-700/10 rounded-[2.25rem] rotate-2" aria-hidden />
             <ImagePlaceholder
               type="about"
-              title="Club Story Image"
-              helper="Replace with team / club photograph"
               aspectRatio="4/5"
               rounded="3xl"
               className="relative shadow-xl"

@@ -164,7 +164,15 @@ export function AboutPage() {
                 className={`relative pl-6 md:pl-0 pb-10 md:pb-0 md:text-center ${
                   timelineVisible ? 'animate-fade-up opacity-100' : 'opacity-0'
                 }`}
-                style={timelineVisible ? { animationDelay: `${i * 140}ms` } : undefined}
+                style={
+                  timelineVisible
+                    ? {
+                        animationDelay: `${i * 220}ms`,
+                        animationDuration: '1.4s',
+                        animationTimingFunction: 'cubic-bezier(0.22, 0.61, 0.36, 1)',
+                      }
+                    : undefined
+                }
               >
                 <span className="absolute -left-[9px] md:static md:mx-auto md:mb-4 top-1 flex items-center justify-center w-4 h-4 md:w-6 md:h-6 rounded-full bg-pitch-700 ring-4 ring-lime-brand/40">
                   <span className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-lime-brand" />

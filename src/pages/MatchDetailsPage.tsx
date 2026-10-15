@@ -120,7 +120,15 @@ export function MatchDetailsPage() {
                       className={`flex items-start gap-4 rounded-2xl bg-pitch-50 border border-pitch-900/10 p-4 ${
                         momentsVisible ? 'animate-fade-up opacity-100' : 'opacity-0'
                       }`}
-                      style={momentsVisible ? { animationDelay: `${i * 120}ms` } : undefined}
+                      style={
+                        momentsVisible
+                          ? {
+                              animationDelay: `${i * 200}ms`,
+                              animationDuration: '1.4s',
+                              animationTimingFunction: 'cubic-bezier(0.22, 0.61, 0.36, 1)',
+                            }
+                          : undefined
+                      }
                     >
                       <div className="w-12 h-12 shrink-0 rounded-full bg-pitch-700 text-lime-brand flex items-center justify-center font-display font-bold">
                         {h.minute}'

@@ -156,15 +156,14 @@ export function Header() {
                     to={item.to}
                     end={item.to === '/'}
                     className={({ isActive }) =>
-                      `flex items-center justify-between px-4 py-4 rounded-xl text-base font-semibold ${
+                      `block px-4 py-4 rounded-xl text-base font-semibold ${
                         isActive
                           ? 'bg-pitch-50 text-pitch-950'
                           : 'text-pitch-900/80 hover:bg-pitch-50/80 hover:text-pitch-950'
                       }`
                     }
                   >
-                    <span>{item.label}</span>
-                    <span className="text-lime-brand">→</span>
+                    {item.label}
                   </NavLink>
                 </li>
               ))}

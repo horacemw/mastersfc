@@ -10,6 +10,8 @@ interface CartItem { product: Product; size: string; qty: number }
 
 const categories: ('All' | Product['category'])[] = ['All', 'Jerseys', 'Training', 'Lifestyle', 'Accessories'];
 
+const formatMWK = (amount: number) => `MWK ${amount.toLocaleString('en-MW')}`;
+
 export function StorePage() {
   useEffect(() => {
     document.title = 'Store | Masters FC';
@@ -111,10 +113,7 @@ export function StorePage() {
                     <h3 className="mt-1 font-display font-bold text-lg text-pitch-950 line-clamp-1">{p.name}</h3>
                     <div className="mt-3 flex items-center justify-between">
                       <span className="font-display font-bold text-xl text-pitch-950">
-                        ${p.price}
-                        <span className="ml-1 text-[10px] font-semibold uppercase tracking-widest text-pitch-800/60">
-                          Sample
-                        </span>
+                        {formatMWK(p.price)}
                       </span>
                       <Button
                         size="sm"
@@ -160,7 +159,7 @@ export function StorePage() {
             <div className="p-6 md:p-8 overflow-auto">
               <p className="text-[11px] font-bold uppercase tracking-widest text-pitch-700">{activeProduct.category}</p>
               <h3 className="mt-1 font-display font-bold text-2xl md:text-3xl text-pitch-950">{activeProduct.name}</h3>
-              <p className="mt-2 font-display font-bold text-2xl text-pitch-950">${activeProduct.price}</p>
+              <p className="mt-2 font-display font-bold text-2xl text-pitch-950">{formatMWK(activeProduct.price)}</p>
               <p className="mt-4 text-sm text-pitch-800/80">{activeProduct.description}</p>
 
               <div className="mt-6">
@@ -279,7 +278,7 @@ export function StorePage() {
                         </button>
                       </div>
                     </div>
-                    <div className="font-display font-bold text-pitch-950">${i.product.price * i.qty}</div>
+                    <div className="font-display font-bold text-pitch-950">{formatMWK(i.product.price * i.qty)}</div>
                   </li>
                 ))}
               </ul>
@@ -289,7 +288,7 @@ export function StorePage() {
             <div className="border-t border-pitch-900/10 p-5 space-y-4">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-pitch-800/70">Subtotal</span>
-                <span className="font-display font-bold text-xl text-pitch-950">${subtotal}</span>
+                <span className="font-display font-bold text-xl text-pitch-950">{formatMWK(subtotal)}</span>
               </div>
               <Button variant="dark" fullWidth size="lg">Checkout</Button>
               <p className="text-[10px] text-center text-pitch-800/60">Demo cart only — no payment processed.</p>

@@ -1,6 +1,7 @@
 import type { Sponsor } from '../types';
 
 export const sponsors: Sponsor[] = [
+  { id: 'fdh', name: 'FDH Bank', tier: 'Official', logo: '/assets/sponsors/fdh-bank.png' },
   { id: 's1', name: 'Official Sponsor', tier: 'Official', logo: '/assets/sponsors/sponsor-1.svg' },
   { id: 's2', name: 'Partner Brand', tier: 'Partner', logo: '/assets/sponsors/sponsor-2.svg' },
   { id: 's3', name: 'Community Partner', tier: 'Community', logo: '/assets/sponsors/sponsor-3.svg' },

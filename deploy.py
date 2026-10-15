@@ -1,148 +1,89 @@
 """
-FTP deploy for mastersfc.digiskills.live.
+Deploy mastersfc.digiskills.live via GitHub + Hostinger Git integration.
 
-Reads credentials from .env.deploy (gitignored). Mirrors ./dist to the
-remote target path (removes stale files first). Writes .htaccess for SPA
-fallback before uploading.
+Flow:
+  1. Rebuild dist/
+  2. Commit any pending source changes to main and push
+  3. Rebuild `deploy` branch (dist contents at root) and push it
+  4. Remind the user to click "Deploy" in hPanel (Hostinger pulls on demand,
+     not on push for this plan)
 
 Usage:
-    python deploy.py
+    npm run deploy
+    python deploy.py --message "fix hero copy"
 """
-import os
+import argparse
+import subprocess
 import sys
-from ftplib import FTP, FTP_TLS, error_perm
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 
 
-def load_env():
-    env_path = ROOT / ".env.deploy"
-    if not env_path.exists():
-        sys.exit(f".env.deploy missing. Expected at {env_path}")
-    for line in env_path.read_text().splitlines():
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        k, _, v = line.partition("=")
-        os.environ.setdefault(k.strip(), v.strip())
+def run(cmd, check=True, capture=False):
+    print(f"$ {' '.join(cmd) if isinstance(cmd, list) else cmd}", flush=True)
+    r = subprocess.run(
+        cmd,
+        cwd=ROOT,
+        shell=isinstance(cmd, str),
+        check=check,
+        text=True,
+        capture_output=capture,
+    )
+    if capture:
+        return (r.stdout or "") + (r.stderr or "")
+    return ""
 
 
-load_env()
-
-FTP_HOST = os.environ["FTP_HOST"]
-FTP_PORT = int(os.environ.get("FTP_PORT", "21"))
-FTP_USER = os.environ["FTP_USER"]
-FTP_PASS = os.environ["FTP_PASS"]
-FTP_TLS_MODE = os.environ.get("FTP_TLS", "auto").lower()
-REMOTE_DIR = os.environ["FTP_REMOTE_DIR"]
-LOCAL_DIR = ROOT / "dist"
-
-if not LOCAL_DIR.is_dir():
-    sys.exit(f"dist/ not found. Run `npm run build` first. Looked at {LOCAL_DIR}")
-
-(LOCAL_DIR / ".htaccess").write_text(
-    "<IfModule mod_rewrite.c>\n"
-    "  RewriteEngine On\n"
-    "  RewriteBase /\n"
-    "  RewriteRule ^index\\.html$ - [L]\n"
-    "  RewriteCond %{REQUEST_FILENAME} !-f\n"
-    "  RewriteCond %{REQUEST_FILENAME} !-d\n"
-    "  RewriteRule . /index.html [L]\n"
-    "</IfModule>\n"
-)
+def git(*args, check=True, capture=False):
+    return run(["git", *args], check=check, capture=capture)
 
 
-def connect():
-    if FTP_TLS_MODE in ("off", "none", "false", "0"):
-        print(f"Connecting FTP {FTP_USER}@{FTP_HOST}:{FTP_PORT} (plaintext)", flush=True)
-        f = FTP()
-        f.connect(FTP_HOST, FTP_PORT, timeout=30)
-        f.login(FTP_USER, FTP_PASS)
-        return f
-    try:
-        print(f"Connecting FTPS (explicit) {FTP_USER}@{FTP_HOST}:{FTP_PORT}", flush=True)
-        f = FTP_TLS()
-        f.connect(FTP_HOST, FTP_PORT, timeout=30)
-        f.auth()
-        f.login(FTP_USER, FTP_PASS)
-        f.prot_p()
-        return f
-    except Exception as e:
-        if FTP_TLS_MODE == "require":
-            raise
-        print(f"FTPS failed ({e}); falling back to plain FTP", flush=True)
-        f = FTP()
-        f.connect(FTP_HOST, FTP_PORT, timeout=30)
-        f.login(FTP_USER, FTP_PASS)
-        return f
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-m", "--message", default="deploy: update site", help="commit message")
+    ap.add_argument("--skip-build", action="store_true", help="skip npm run build")
+    args = ap.parse_args()
+
+    if not args.skip_build:
+        print("--- Building ---", flush=True)
+        run("npm run build")
+
+    htaccess = ROOT / "dist" / ".htaccess"
+    htaccess.write_text(
+        "<IfModule mod_rewrite.c>\n"
+        "  RewriteEngine On\n"
+        "  RewriteBase /\n"
+        "  RewriteRule ^index\\.html$ - [L]\n"
+        "  RewriteCond %{REQUEST_FILENAME} !-f\n"
+        "  RewriteCond %{REQUEST_FILENAME} !-d\n"
+        "  RewriteRule . /index.html [L]\n"
+        "</IfModule>\n"
+    )
+
+    print("--- Updating main branch ---", flush=True)
+    status = git("status", "--porcelain", capture=True).strip()
+    if status:
+        git("add", "-A")
+        git("commit", "-m", args.message)
+    else:
+        print("(no source changes to commit)", flush=True)
+    git("push", "origin", "main")
+
+    print("--- Rebuilding deploy branch from dist/ ---", flush=True)
+    git("branch", "-D", "deploy", check=False)
+    git("subtree", "split", "--prefix", "dist", "-b", "deploy")
+    git("push", "origin", "deploy", "--force-with-lease")
+
+    print("", flush=True)
+    print("=" * 60, flush=True)
+    print("Pushed. Final step (manual):", flush=True)
+    print("  hPanel -> mastersfc.digiskills.live -> Advanced -> Git", flush=True)
+    print("  -> click 'Deploy'", flush=True)
+    print("", flush=True)
+    print("Verify: https://mastersfc.digiskills.live", flush=True)
+    print("=" * 60, flush=True)
 
 
-def ensure_cwd(ftp, path):
-    parts = path.strip("/").split("/")
-    ftp.cwd("/")
-    for p in parts:
-        try:
-            ftp.cwd(p)
-        except error_perm:
-            ftp.mkd(p)
-            ftp.cwd(p)
-
-
-def is_dir(ftp, name):
-    cur = ftp.pwd()
-    try:
-        ftp.cwd(name)
-        ftp.cwd(cur)
-        return True
-    except error_perm:
-        return False
-
-
-def rm_tree(ftp, path):
-    try:
-        ftp.cwd(path)
-    except error_perm:
-        return
-    names = []
-    try:
-        names = ftp.nlst()
-    except error_perm:
-        names = []
-    for n in names:
-        if n in (".", ".."):
-            continue
-        if is_dir(ftp, n):
-            rm_tree(ftp, f"{path}/{n}")
-            try:
-                ftp.rmd(n)
-            except error_perm:
-                pass
-        else:
-            try:
-                ftp.delete(n)
-            except error_perm:
-                pass
-
-
-ftp = connect()
-print(f"Ensuring remote dir {REMOTE_DIR}", flush=True)
-ensure_cwd(ftp, REMOTE_DIR)
-print(f"Clearing contents of {REMOTE_DIR}", flush=True)
-rm_tree(ftp, REMOTE_DIR)
-
-uploaded = 0
-for root, _, files in os.walk(LOCAL_DIR):
-    rel = os.path.relpath(root, LOCAL_DIR).replace("\\", "/")
-    remote_root = REMOTE_DIR if rel == "." else f"{REMOTE_DIR}/{rel}"
-    ensure_cwd(ftp, remote_root)
-    for f in files:
-        local_path = Path(root) / f
-        with open(local_path, "rb") as fp:
-            ftp.storbinary(f"STOR {f}", fp)
-        uploaded += 1
-        print(f"  up: {remote_root}/{f}", flush=True)
-
-print(f"Done. {uploaded} files uploaded.", flush=True)
-print(f"Site: {os.environ.get('SITE_URL', '')}", flush=True)
-ftp.quit()
+if __name__ == "__main__":
+    main()

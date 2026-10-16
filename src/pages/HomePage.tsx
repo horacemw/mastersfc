@@ -180,6 +180,8 @@ export function HomePage() {
             <div className="absolute -inset-5 bg-pitch-700/10 rounded-[2.25rem] -rotate-2" aria-hidden />
             <ImagePlaceholder
               type="about"
+              src="/assets/underlearnmore.jpg"
+              alt="Masters FC — more than football"
               aspectRatio="4/5"
               rounded="3xl"
               className="relative shadow-xl"

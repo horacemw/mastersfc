@@ -2,6 +2,35 @@ import type { NewsArticle } from '../types';
 
 export const news: NewsArticle[] = [
   {
+    id: 'n09',
+    slug: 'masters-fc-partners-chibiso-motors',
+    title: 'Masters FC partners Chibiso Motors',
+    excerpt:
+      'Chibiso Motors will reward the Player of the Month with K350,000 cash and a three-month internship in automotive skills worth K1.5 million.',
+    category: 'Club News',
+    date: '2026-10-16',
+    author: 'Masters FC Media',
+    image: '/assets/news/chibiso-motors-1.jfif',
+    gallery: [
+      '/assets/news/chibiso-motors-2.jfif',
+      '/assets/news/chibiso-motors-3.jfif',
+    ],
+    featured: true,
+    content: [
+      'Masters FC has partnered with Chibiso Motors in an initiative that will reward outstanding players while equipping them with practical skills for life beyond football.',
+      'Under the partnership, Chibiso Motors will provide a monthly Player of the Month award worth K350,000 in cash and offer the winning player a three-month internship in automotive skills valued at K1.5 million.',
+      'The internship, which costs K500,000 per month, will cover motor vehicle mechanics, panel beating, bodywork and polishing, allowing players to develop practical skills according to their interests.',
+      'Chibiso Motors Office Manager Lucy Kampango said the partnership would benefit both organisations through increased visibility for the company and skills development for Masters FC players.',
+      '"We are offering K350,000 for the Player of the Month and a free three-month internship for the winning player. We believe this is important because young players also need practical skills that can help them beyond football," said Kampango.',
+      'Masters FC Chief Executive Officer Kevin Moyo welcomed the partnership, saying it would help players prepare for life after their football careers.',
+      '"Football is a very short-term career. If you acquire new skills, life will not be that hard for you because after football you can do other things. This is a great initiative, and I love it dearly," said Moyo.',
+      'Moyo said players could spend only a few years in football before having to consider alternative ways of earning a living, making practical skills important for their future.',
+      'The partnership offers players an opportunity to combine sporting ambitions with technical training that could help them pursue employment or business opportunities after retirement.',
+      'The initiative adds a personal development component to the club\'s commercial partnerships, linking recognition for performance on the pitch with preparation for life beyond football.',
+      '#MWOSMalawi #ChibisoMotors #KarlsSolutions #ChisomoElectronics #MastersFootballClub #MastersSecurityServices #MastersFinanceLTD #MastersAgriWorld #MastersBakery #MastersBoreholeDrilling',
+    ],
+  },
+  {
     id: 'n07',
     slug: 'masters-fc-partners-chisomo-electronics',
     title: 'Masters FC partners Chisomo Electronics',
@@ -12,7 +41,6 @@ export const news: NewsArticle[] = [
     author: 'Masters FC Media',
     image: '/assets/news/chisomo-electronics-1.jfif',
     gallery: ['/assets/news/chisomo-electronics-2.jfif'],
-    featured: true,
     content: [
       'Masters FC has partnered with Chisomo Electronics, who will sponsor the club’s Player of the Match award with K100,000 for every match throughout the second half of the season.',
       'The partnership will recognise outstanding individual performances while giving players additional motivation as we compete in the FDH Premiership and domestic cup competitions.',

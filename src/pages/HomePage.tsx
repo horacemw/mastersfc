@@ -82,7 +82,7 @@ export function HomePage() {
               Developing talent, building character and creating opportunities through football.
             </p>
             <div className="mt-8 flex flex-wrap gap-3 animate-fade-up delay-300">
-              <LinkButton to="/matches" variant="lime" size="lg" icon={<Trophy />}>
+              <LinkButton to="/tickets" variant="lime" size="lg" icon={<Trophy />}>
                 Buy Tickets
               </LinkButton>
               <LinkButton to="/store" variant="dark" size="lg" icon={<CartIcon />}>

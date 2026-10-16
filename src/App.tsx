@@ -11,6 +11,7 @@ import ArticlePage from './pages/ArticlePage';
 import GalleryPage from './pages/GalleryPage';
 import AcademyPage from './pages/AcademyPage';
 import StorePage from './pages/StorePage';
+import TicketsPage from './pages/TicketsPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/academy" element={<AcademyPage />} />
         <Route path="/store" element={<StorePage />} />
+        <Route path="/tickets" element={<TicketsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

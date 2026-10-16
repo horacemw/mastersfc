@@ -36,6 +36,7 @@ export const club = {
     { label: 'News', to: '/news' },
     { label: 'Gallery', to: '/gallery' },
     { label: 'Academy', to: '/academy' },
+    { label: 'Tickets', to: '/tickets' },
     { label: 'Store', to: '/store' },
     { label: 'Contact', to: '/contact' },
   ],

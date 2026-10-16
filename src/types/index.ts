@@ -66,7 +66,7 @@ export interface Product {
   slug: string;
   name: string;
   price: number;
-  category: 'Jerseys' | 'Training' | 'Lifestyle' | 'Accessories';
+  category: 'Jerseys' | 'T-Shirts' | 'Caps' | 'Tracksuits';
   description: string;
   image?: string;
   sizes: string[];

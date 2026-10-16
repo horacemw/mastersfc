@@ -16,6 +16,7 @@ import { stats } from '../data/stats';
 import { club } from '../data/club';
 import {
   ArrowRight,
+  CartIcon,
   CheckCircle,
   Heart,
   Play,
@@ -81,7 +82,13 @@ export function HomePage() {
               Developing talent, building character and creating opportunities through football.
             </p>
             <div className="mt-8 flex flex-wrap gap-3 animate-fade-up delay-300">
-              <LinkButton to="/team" variant="lime" size="lg" iconRight={<ArrowRight />}>
+              <LinkButton to="/matches" variant="lime" size="lg" icon={<Trophy />}>
+                Buy Tickets
+              </LinkButton>
+              <LinkButton to="/store" variant="dark" size="lg" icon={<CartIcon />}>
+                Buy Merchandise
+              </LinkButton>
+              <LinkButton to="/team" variant="ghost" size="lg" className="!text-white !bg-white/10 hover:!bg-white/15" iconRight={<ArrowRight />}>
                 Our Team
               </LinkButton>
               <LinkButton to="/gallery" variant="ghost" size="lg" className="!text-white !bg-white/10 hover:!bg-white/15" icon={<Play />}>

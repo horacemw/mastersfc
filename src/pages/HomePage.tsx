@@ -287,16 +287,15 @@ export function HomePage() {
       {/* COMMUNITY CTA */}
       <section className="relative py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 bg-pitch-950" aria-hidden />
-        <div className="absolute inset-0 opacity-40" aria-hidden>
-          <ImagePlaceholder
-            type="hero"
-            src="/mastersfcheroimage.jfif"
+        <div className="absolute inset-0" aria-hidden>
+          <img
+            src="/bepart.jfif"
             alt=""
-            rounded="none"
-            className="h-full w-full"
+            className="h-full w-full object-cover opacity-45"
+            loading="lazy"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-pitch-950 via-pitch-950/85 to-pitch-950/60" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-t from-pitch-950 via-pitch-950/80 to-pitch-950/55" aria-hidden />
         <div className="container-fc relative z-10 text-center max-w-3xl">
           <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.3em] uppercase text-lime-brand mb-5">
             <span className="h-px w-6 bg-lime-brand" />

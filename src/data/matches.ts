@@ -3,13 +3,13 @@ import type { Match } from '../types';
 export const matches: Match[] = [
   {
     id: 'm-next',
-    opponent: 'Opponent FC',
-    opponentShort: 'OPP',
+    opponent: 'Karonga United',
+    opponentShort: 'KUFC',
     home: true,
     date: '2026-10-18',
-    time: '15:00',
-    venue: 'Home Stadium',
-    competition: 'Premier League Cup',
+    time: '18:00',
+    venue: 'Bingu National Stadium',
+    competition: 'FDH Bank Premiership',
     status: 'Upcoming',
   },
   {

@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import type { Match } from '../types';
+import { getTeamByName } from '../data/teams';
 import { Calendar, Clock, Pin } from './Icons';
+
+const mastersLogo = '/masters fc logo.png';
 
 interface MatchCardProps {
   match: Match;
@@ -22,16 +25,24 @@ const statusBadge: Record<Match['status'], string> = {
   Live: 'bg-red-500 text-white animate-pulse',
 };
 
-function TeamBadge({ name, short, isHome }: { name: string; short?: string; isHome: boolean }) {
+function TeamBadge({ name, short, isHome, logo }: { name: string; short?: string; isHome: boolean; logo?: string }) {
   const initials = (short ?? name).slice(0, 3).toUpperCase();
   return (
     <div className="flex flex-col items-center gap-2 w-24 md:w-28 text-center">
       <div
-        className={`w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center font-display font-bold text-sm md:text-base ring-2 ${
-          isHome ? 'bg-pitch-700 text-lime-brand ring-lime-brand/60' : 'bg-pitch-100 text-pitch-950 ring-pitch-900/10'
+        className={`w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden flex items-center justify-center font-display font-bold text-sm md:text-base ring-2 ${
+          logo
+            ? 'bg-white ring-pitch-900/10'
+            : isHome
+              ? 'bg-pitch-700 text-lime-brand ring-lime-brand/60'
+              : 'bg-pitch-100 text-pitch-950 ring-pitch-900/10'
         }`}
       >
-        {initials}
+        {logo ? (
+          <img src={logo} alt={`${name} crest`} className="w-full h-full object-contain p-1" loading="lazy" />
+        ) : (
+          initials
+        )}
       </div>
       <span className="text-xs md:text-sm font-semibold text-pitch-950 line-clamp-1">{name}</span>
     </div>
@@ -44,6 +55,9 @@ export function MatchCard({ match, variant = 'default' }: MatchCardProps) {
   const away = match.home ? match.opponent : 'Masters FC';
   const homeShort = match.home ? 'MFC' : match.opponentShort;
   const awayShort = match.home ? match.opponentShort : 'MFC';
+  const opponentLogo = getTeamByName(match.opponent)?.logo;
+  const homeLogo = match.home ? mastersLogo : opponentLogo;
+  const awayLogo = match.home ? opponentLogo : mastersLogo;
 
   const Card = (
     <article
@@ -72,7 +86,7 @@ export function MatchCard({ match, variant = 'default' }: MatchCardProps) {
         </div>
 
         <div className="flex items-center justify-between gap-2 md:gap-4">
-          <TeamBadge name={home} short={homeShort} isHome={match.home} />
+          <TeamBadge name={home} short={homeShort} isHome={match.home} logo={homeLogo} />
           <div className="flex flex-col items-center gap-1">
             {match.status === 'Full Time' && match.score ? (
               <div className={`font-display font-bold text-3xl md:text-4xl tracking-wider ${isFeatured ? 'text-white' : 'text-pitch-950'}`}>
@@ -87,7 +101,7 @@ export function MatchCard({ match, variant = 'default' }: MatchCardProps) {
               {match.time}
             </span>
           </div>
-          <TeamBadge name={away} short={awayShort} isHome={!match.home} />
+          <TeamBadge name={away} short={awayShort} isHome={!match.home} logo={awayLogo} />
         </div>
 
         <div className={`mt-6 md:mt-8 pt-4 grid grid-cols-3 gap-3 text-[11px] md:text-xs border-t ${isFeatured ? 'border-pitch-100/15 text-pitch-100/80' : 'border-pitch-900/10 text-pitch-800/70'}`}>

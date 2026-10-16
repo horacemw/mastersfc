@@ -56,6 +56,27 @@ export const news: NewsArticle[] = [
     ],
   },
   {
+    id: 'n10',
+    slug: 'ndau-leads-the-way',
+    title: 'Ndau leads the way',
+    excerpt:
+      'Masters FC forward Hastings Ndau is the club\'s leading scorer after the opening six weeks of the 2026 FDH Bank Premiership season.',
+    category: 'First Team',
+    date: '2026-06-05',
+    author: 'Masters FC Media',
+    image: '/assets/news/ndau-leads-1.jpg',
+    content: [
+      'Masters FC forward Hastings Ndau is the club\'s leading scorer after the opening six weeks of the 2026 FDH Bank Premiership season. The 21-year-old winger has been a key performer in Masters FC\'s debut top-flight campaign.',
+      'The club currently sits fourth on the table with 12 points from six matches. Masters FC is just one point behind the joint leaders in a tightly contested start to the season.',
+      'Ndau has scored three goals so far, making him the club\'s top scorer at this early stage of the 30-week campaign. His form has been central to Masters FC\'s strong start in the league.',
+      'His standout performance came against Goshen City Dedza Dynamos FC. Ndau scored a hat-trick in that match, the first in the 2026 FDH Bank Premiership season, and also provided an assist. He was named Man of the Match for the performance.',
+      'Ndau joined Masters FC following an impressive spell with Baka City in the NBS National Division League. He had been on loan from Songwe Border United and played a key role in Baka City\'s promotion to the top flight.',
+      'While Ndau leads the scoring charts, Stain Davie has scored twice. Phillimon Ndhlovu, Enock Kaonga and Precious Sambani have each scored once. An own goal from Mitundu defender Leo Kachikho completes Masters FC\'s tally of nine goals so far.',
+      '#MWOSMalawi #MastersFootballClub #MastersSecurityServices #MastersFinanceLTD #MastersAgriWorld #MastersBakery #MastersBoreholeDrilling',
+      '— with MWOS Malawi.',
+    ],
+  },
+  {
     id: 'n08',
     slug: 'sambani-ndau-goal-of-the-month',
     title: 'Sambani, Ndau win inaugural goal of the month awards',

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { NewsCard } from '../components/NewsCard';
 import { PageHero } from '../components/PageHero';
 import { featuredArticle, latestNews } from '../data/news';
-import { Search } from '../components/Icons';
+import { ArrowLeft, ArrowRight, Search } from '../components/Icons';
 
 const PAGE_SIZE = 6;
 
@@ -106,7 +106,21 @@ export function NewsPage() {
               </ul>
 
               {totalPages > 1 && (
-                <nav className="mt-10 flex items-center justify-center gap-2" aria-label="Pagination">
+                <nav
+                  className="mt-10 flex items-center justify-center flex-wrap gap-2"
+                  aria-label="Pagination"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={safePage === 1}
+                    aria-label="Previous page"
+                    className="inline-flex items-center gap-1.5 h-10 px-4 rounded-full text-sm font-semibold bg-pitch-50 text-pitch-800 hover:bg-pitch-100 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-pitch-50 transition"
+                  >
+                    <ArrowLeft width={16} height={16} />
+                    <span className="hidden sm:inline">Previous</span>
+                  </button>
+
                   {Array.from({ length: totalPages }).map((_, i) => {
                     const p = i + 1;
                     const active = p === safePage;
@@ -124,6 +138,17 @@ export function NewsPage() {
                       </button>
                     );
                   })}
+
+                  <button
+                    type="button"
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={safePage === totalPages}
+                    aria-label="Next page"
+                    className="inline-flex items-center gap-1.5 h-10 px-4 rounded-full text-sm font-semibold bg-pitch-50 text-pitch-800 hover:bg-pitch-100 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-pitch-50 transition"
+                  >
+                    <span className="hidden sm:inline">Next</span>
+                    <ArrowRight width={16} height={16} />
+                  </button>
                 </nav>
               )}
             </>

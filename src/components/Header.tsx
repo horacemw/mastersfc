@@ -124,7 +124,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       <div
-        className={`lg:hidden fixed inset-0 z-[60] transition-opacity ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`lg:hidden fixed inset-0 z-[60] transition-opacity duration-150 ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         aria-hidden={!open}
       >
         <button
@@ -134,7 +134,8 @@ export function Header() {
           tabIndex={-1}
         />
         <aside
-          className={`absolute right-0 top-0 bottom-0 w-[86%] max-w-sm bg-white shadow-2xl flex flex-col transition-transform ${open ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute right-0 top-0 bottom-0 w-[86%] max-w-sm bg-white shadow-2xl flex flex-col transition-transform duration-200 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
+          style={{ willChange: 'transform' }}
           role="dialog"
           aria-label="Main navigation"
         >

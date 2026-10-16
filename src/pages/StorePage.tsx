@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ImagePlaceholder } from '../components/ImagePlaceholder';
 import { PageHero } from '../components/PageHero';
 import { Button } from '../components/Button';
@@ -53,6 +54,37 @@ export function StorePage() {
           </Button>
         }
       />
+
+      <section className="pt-10 md:pt-14 bg-white">
+        <div className="container-fc">
+          <Link
+            to="/store"
+            className="group block relative overflow-hidden rounded-3xl border border-pitch-900/10 shadow-sm"
+            aria-label="Masters FC jerseys available now — MWK 120,000"
+          >
+            <img
+              src="/assets/products/jerseys-promo.jpg"
+              alt="Masters FC jerseys available now at MWK 120,000"
+              className="w-full h-56 sm:h-72 md:h-96 object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-pitch-950/70 via-pitch-950/30 to-transparent pointer-events-none" aria-hidden />
+            <div className="absolute inset-0 flex items-end sm:items-center">
+              <div className="p-5 sm:p-8 md:p-12 max-w-xl text-white">
+                <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-lime-brand">
+                  <span className="h-px w-5 bg-lime-brand" /> Available Now
+                </span>
+                <h2 className="mt-2 font-display font-black text-2xl sm:text-3xl md:text-5xl leading-tight text-shadow-hero">
+                  Jerseys Available Now
+                </h2>
+                <p className="mt-2 md:mt-3 font-display font-bold text-lg sm:text-2xl md:text-3xl text-lime-brand">
+                  MWK 120,000
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </section>
 
       <section className="py-14 md:py-20 bg-white">
         <div className="container-fc">

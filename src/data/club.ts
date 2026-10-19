@@ -37,6 +37,7 @@ export const club = {
     { label: 'Gallery', to: '/gallery' },
     { label: 'Academy', to: '/academy' },
     { label: 'Tickets', to: '/tickets' },
+    { label: 'Membership', to: '/membership' },
     { label: 'Store', to: '/store' },
     { label: 'Contact', to: '/contact' },
   ],

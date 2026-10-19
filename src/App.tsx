@@ -14,6 +14,7 @@ const GalleryPage = lazy(() => import('./pages/GalleryPage'));
 const AcademyPage = lazy(() => import('./pages/AcademyPage'));
 const StorePage = lazy(() => import('./pages/StorePage'));
 const TicketsPage = lazy(() => import('./pages/TicketsPage'));
+const MembershipPage = lazy(() => import('./pages/MembershipPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
@@ -118,6 +119,14 @@ function App() {
           element={
             <Suspense fallback={<RouteFallback />}>
               <TicketsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/membership"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <MembershipPage />
             </Suspense>
           }
         />

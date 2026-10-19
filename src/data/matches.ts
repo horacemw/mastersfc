@@ -2,7 +2,7 @@ import type { Match } from '../types';
 
 export const matches: Match[] = [
   {
-    id: 'm-next',
+    id: 'm-karonga',
     opponent: 'Karonga United',
     opponentShort: 'KUFC',
     home: true,
@@ -10,7 +10,9 @@ export const matches: Match[] = [
     time: '18:00',
     venue: 'Bingu National Stadium',
     competition: 'FDH Bank Premiership',
-    status: 'Upcoming',
+    status: 'Full Time',
+    score: { home: 4, away: 1 },
+    summary: 'A dominant home performance at Bingu National Stadium as Masters FC bounced back in style against Karonga United.',
   },
   {
     id: 'm002',

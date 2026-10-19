@@ -1,22 +1,24 @@
-import { lazy, Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SiteLayout from './layouts/SiteLayout';
 import HomePage from './pages/HomePage';
-
-const AboutPage = lazy(() => import('./pages/AboutPage'));
-const TeamPage = lazy(() => import('./pages/TeamPage'));
-const PlayerProfilePage = lazy(() => import('./pages/PlayerProfilePage'));
-const MatchesPage = lazy(() => import('./pages/MatchesPage'));
-const MatchDetailsPage = lazy(() => import('./pages/MatchDetailsPage'));
-const NewsPage = lazy(() => import('./pages/NewsPage'));
-const ArticlePage = lazy(() => import('./pages/ArticlePage'));
-const GalleryPage = lazy(() => import('./pages/GalleryPage'));
-const AcademyPage = lazy(() => import('./pages/AcademyPage'));
-const StorePage = lazy(() => import('./pages/StorePage'));
-const TicketsPage = lazy(() => import('./pages/TicketsPage'));
-const MembershipPage = lazy(() => import('./pages/MembershipPage'));
-const ContactPage = lazy(() => import('./pages/ContactPage'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+import {
+  AboutPage,
+  AcademyPage,
+  ArticlePage,
+  ContactPage,
+  GalleryPage,
+  MatchDetailsPage,
+  MatchesPage,
+  MembershipPage,
+  NewsPage,
+  NotFoundPage,
+  PlayerProfilePage,
+  StorePage,
+  TeamPage,
+  TicketsPage,
+  navPreloaders,
+} from './routes';
 
 function RouteFallback() {
   return (
@@ -29,7 +31,30 @@ function RouteFallback() {
   );
 }
 
+function useIdlePreloadNavRoutes() {
+  useEffect(() => {
+    const preloadAll = () => {
+      for (const loader of Object.values(navPreloaders)) {
+        try {
+          loader();
+        } catch {
+          /* ignore */
+        }
+      }
+    };
+    // Preload every top-level route during browser idle time so that
+    // by the time the user actually clicks a nav link, the chunk is cached.
+    const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
+    if (typeof w.requestIdleCallback === 'function') {
+      w.requestIdleCallback(preloadAll);
+    } else {
+      setTimeout(preloadAll, 2000);
+    }
+  }, []);
+}
+
 function App() {
+  useIdlePreloadNavRoutes();
   return (
     <Routes>
       <Route element={<SiteLayout />}>

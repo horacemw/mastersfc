@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { club } from '../data/club';
+import { preloadRoute } from '../routes';
 import { LinkButton } from './Button';
 import { Logo } from './Logo';
 import { Close, Facebook, Menu } from './Icons';
+
+const prefetchHandlers = (path: string) => ({
+  onMouseEnter: () => preloadRoute(path),
+  onFocus: () => preloadRoute(path),
+  onTouchStart: () => preloadRoute(path),
+});
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -82,6 +89,7 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 end={item.to === '/'}
+                {...prefetchHandlers(item.to)}
                 className={({ isActive }) =>
                   `relative px-3.5 py-2 text-sm font-semibold transition-colors ${
                     isActive
@@ -156,6 +164,7 @@ export function Header() {
                   <NavLink
                     to={item.to}
                     end={item.to === '/'}
+                    {...prefetchHandlers(item.to)}
                     className={({ isActive }) =>
                       `block px-4 py-4 rounded-xl text-base font-semibold ${
                         isActive
